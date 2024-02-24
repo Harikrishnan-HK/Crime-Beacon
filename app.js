@@ -27,22 +27,14 @@ const transporter = createTransport({
   },
 });
 
+mongoose.connect('mongodb://127.0.0.1:27017/capstoneproject', {
+  useNewURLParser: true,
+  useUnifiedTopology: true,
+},6000000)
 
-// Define an async function to connect to the database
-async function connectToDatabase() {
-  try {
-    await mongoose.connect("mongodb://127.0.0.1:27017/capstoneproject", {
-      useNewUrlParser: true,
-      useUnifiedTopology: true
-    });
-    console.log('Connected to database myDb ;)');
-  } catch (error) {
-    console.error('Error connecting to database:', error);
-  }
-}
+.then(console.log("connected to server"))
+.catch((err) => console.log(err));
 
-// Call the async function to connect to the database
-connectToDatabase();
 
 
 app.locals.userId = "";
