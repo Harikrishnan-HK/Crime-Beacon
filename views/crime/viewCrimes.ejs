@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Incident Listings - Crime Beacon</title>
+    <link rel="icon" type="image/png" href="/images/logoimage.png" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
+    />
+  </head>
+  <style>
+    table {
+      text-align: center;
+      border-collapse: collapse;
+      width: 60%;
+      margin: 0 auto;
+      z-index: 0;
+    }
+
+    th,
+    td {
+      color: black;
+      border: 1px solid black;
+      padding: 8px;
+      text-align: center;
+      min-width: 180px;
+    }
+    td:nth-child(2), td:nth-child(3){
+      min-width: 300px;
+    }
+    th {
+      color: #2878c1;
+    }
+    .viewCrimecontainer {
+      height: fit-content;
+      padding: 30px;
+      margin: 170px auto;
+      margin-top: 250px;
+      max-width: 1200px;
+      max-height: 750px;
+      width: 100%;
+      background-color: #fff;
+      border-radius: 5px;
+      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+    }
+
+    .viewCrimecontainer h1 {
+      text-align: center;
+      color: #2878c1;
+    }
+
+    button {
+      margin-top: 20px;
+      margin-bottom: 20px;
+      width: 150px;
+      height: 50px;
+      border: none;
+      outline: none;
+      background: #2f2f2f;
+      color: #fff;
+      font-size: 22px;
+      border-radius: 40px;
+      text-align: center;
+      box-shadow: 0 6px 20px -5px rgba(0, 0, 0, 0.4);
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+    }
+  </style>
+
+  <body>
+    <%- include('../partials/header'); %>
+    <div class="img"></div>
+    <div class="center">
+      <div class="viewCrimecontainer">
+        <main>
+          <h1>My Crime Reports</h1> <br />
+          <div
+            id="update-success"
+            style="display: <%= successMessage ? 'block' : 'none' %>;"
+          >
+            <p>
+              <%= successMessage %>
+              <span
+                id="close-icon"
+                style="color: black"
+                onclick="closeSuccessMessage()"
+              >
+                &nbsp; &nbsp; &times;
+              </span>
+            </p>
+          </div>
+          <table id="editPageTable">
+            <tr>
+              <th>Date</th>
+              <th>Crime Title</th>
+              <th>Crime Description</th>
+              <th>Status</th>
+              <th>Manage Incident</th>
+            </tr>
+            <% crimeList.forEach(function(crimeList) { %>
+            <tr>
+              <td><%= crimeList.date.toDateString() %></td>
+              <td style="column-width: 500px;"><%= crimeList.title %></td>
+              <td><%= crimeList.description %></td>
+              <td><%= crimeList.status %></td>
+              <td>
+                <form method="get" action="/manageCrime/<%= crimeList._id %>">
+                  <button class="view-button" type="submit">Manage</button>
+                </form>
+              </td>
+            </tr>
+            <% }) %>
+          </table>
+        </main>
+      </div>
+    </div>
+    <script>
+      function closeSuccessMessage() {
+        const successMessage = document.getElementById("update-success");
+        successMessage.style.display = "none";
+      }
+    </script>
+
+    <%- include('../partials/footer'); %>
+  </body>
+</html>

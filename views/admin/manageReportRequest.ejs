@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Incident Listings - Crime Beacon</title>
+    <link rel="icon" type="image/png" href="/images/logoimage.png" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
+    />
+  </head>
+  <body>
+    <%- include('../partials/adminHeader'); %>
+    <div class="img"></div>
+    <div class="center">
+      <div class="adminContainer">
+        <div class="wrapper">
+          <div class="report-details">
+            <h1>Review Flagged Contents</h1>
+            <div class="report-info">
+              <p><strong>Crime ID:</strong> <%= report.crimeId %></p>
+              <p><strong>Report Type:</strong> <%= report.reportType %></p>
+              <p><strong>Report Reason:</strong> <%= report.reportReason %></p>
+            </div>
+            <form
+              action="/approveReportRequest/<%= report._id %>"
+              method="post"
+            >
+              <button type="submit">Approve</button>
+            </form>
+
+            <form action="/rejectReportRequest/<%= report._id %>" method="post">
+              <button type="submit">Reject</button>
+            </form>
+
+            <div class="actions">
+              <a href="/adminDashboard">Back to Dashboard</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <%- include('../partials/footer'); %>
+  </body>
+</html>

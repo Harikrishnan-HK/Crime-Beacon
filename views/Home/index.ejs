@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - Crime Beacon</title>
+    <link rel="icon" type="image/png" href="/images/logoimage.png"/> 
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"/>
+   </head>
+<body>
+  <%- include('../partials/header'); %>
+  <div class="img"></div>
+  <div class="center">
+
+    <div class="title">Online Crime Reporting</div>
+    <div class="sub_title">We work for you</div>
+    <div class="btns">
+      <button><a id="homelink" href="crimeListings" style="text-decoration: none;color: inherit;">Crime Listing</button></a>
+      <button><a id="homelink" href="crimereport" style="text-decoration: none;color: inherit;">Report Crime</button></a>
+    </div>
+  </div>
+  <script>
+    function closeSuccessMessage() {
+      const successMessage = document.getElementById("logout-message");
+      successMessage.style.display = "none";
+    }
+  </script>
+
+  <%- include('../partials/footer'); %>
+</body>
+</html>

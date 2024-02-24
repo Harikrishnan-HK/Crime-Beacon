@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Community Alerts - Crime Beacon</title>
+    <link rel="icon" type="image/png" href="/images/logoimage.png" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
+    />
+  </head>
+  <body>
+    <%- include('../partials/header'); %>
+    <div class="terms">
+      <div
+        id="success-message"
+        style="display: <%= errorMessage ? 'block' : 'none' %>;"
+      >
+        <p style="color: red">
+          <%= errorMessage %>
+          <span
+            id="close-icon"
+            style="color: red"
+            onclick="closeSuccessMessage()"
+          >
+            &nbsp; &nbsp; &times;
+          </span>
+        </p>
+      </div>
+      <div
+        id="success-message"
+        style="display: <%= successMessage ? 'block' : 'none' %>;"
+      >
+        <p style="color: #4caf50">
+          <%= successMessage %>
+          <span
+            id="close-icon"
+            style="color: black"
+            onclick="closeSuccessMessage()"
+          >
+            &nbsp; &nbsp; &times;
+          </span>
+        </p>
+      </div>
+
+      <h1>Community Alerts</h1>
+      <br />
+
+      <p>
+        Stay informed and receive important community alerts. Customize your
+        alert preferences to receive the most relevant information:
+      </p>
+      <br />
+
+      <form class="content-container" action="/communityAlert" method="post">
+        <div class="form-feedback">
+          <label for="email">Email:</label>
+          <input type="email" id="email" name="email" required />
+          <p>
+            We will send alerts and notifications to the provided email address.
+          </p>
+        </div>
+        <div class="form-feedback">
+          <label for="phone">Phone Number:</label>
+          <input
+            type="tel"
+            id="phone"
+            name="phone"
+            pattern="[0-9]{10}"
+            required
+          />
+          <p>
+            Provide your phone number (10 digits) if you wish to receive alerts
+            via SMS.
+          </p>
+        </div>
+
+        <div class="form-feedback">
+          <label>Alert Preferences:</label>
+          <div class="preferences">
+            <input
+              type="checkbox"
+              id="incident-alerts"
+              name="alerttype"
+              value="Incident Alerts"
+            />
+            <label for="incident-alerts"
+              >Incident Alerts
+              <p>
+                (Receive updates about reported incidents and crimes in your
+                community)
+              </p></label
+            >
+          </div>
+          <div class="preferences">
+            <input
+              type="checkbox"
+              id="safety-advisories"
+              name="alerttype"
+              value="Safety Advisories"
+            />
+            <label for="safety-advisories"
+              >Safety Advisories
+              <p>
+                (Stay informed about safety advisories, tips, and emergency
+                alerts)
+              </p></label
+            >
+          </div>
+        </div>
+
+        <div class="form-feedback">
+          <label>Receive Alerts Via:</label>
+          <input
+            type="radio"
+            id="email-alert"
+            name="alertmethod"
+            value="Email"
+            checked
+          />
+          <span for="email-alert">Email</span>
+          <input
+            type="radio"
+            id="phone-alert"
+            name="alertmethod"
+            value="Phone"
+          />
+          <span for="phone-alert">Phone (SMS)</span>
+        </div>
+        <button id="subscribeButton" type="submit">Subscribe</button>
+      </form>
+
+      <div class="unsubscribe-section">
+        <h3>Unsubscribe from Alerts</h3>
+        <p>
+          If you no longer wish to receive alerts, you can unsubscribe at any
+          time by clicking the
+          <a href="javascript:void(0);" id="unsubscribe-link">unsubscribe</a>
+          link here.
+        </p>
+        <div class="unsubscribeArea" style="display: none">
+          <form id="unsubscribe-form" action="/unsubscribeAlerts" method="post">
+            <label for="emailUnsubscribe">Enter your Mail Id</label>
+            <input
+              type="email"
+              id="unsubscribe-email"
+              name="emailUnsubscribe"
+              placeholder="Your Subscribed Email Id"
+              required
+            />
+            <button id="unsubscribe" class="unsubscribeButton" type="submit">
+              Unsubscribe
+            </button>
+            <button id="cancel-unsubscribe" class="unsubscribeButton">
+              Cancel
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <script>
+      function closeSuccessMessage() {
+        const message = document.getElementById("success-message");
+        message.style.display = "none";
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        const unsubscribeLink = document.getElementById("unsubscribe-link");
+        const unsubscribeArea = document.querySelector(".unsubscribeArea");
+        const cancelButton = document.getElementById("cancel-unsubscribe");
+        const unsubscribeForm = document.getElementById("unsubscribe-form");
+
+        unsubscribeLink.addEventListener("click", () => {
+          unsubscribeArea.style.display = "block";
+        });
+
+        cancelButton.addEventListener("click", () => {
+          unsubscribeArea.style.display = "none";
+        });
+
+        unsubscribeForm.addEventListener("submit", async (event) => {
+          event.preventDefault();
+
+          try {
+            // Send the form data to the server
+            const response = await fetch("/unsubscribeAlerts", {
+              method: "POST",
+              body: new FormData(unsubscribeForm), // This includes the email field
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+              // Unsubscribe successful
+              unsubscribeArea.style.display = "none"; // hide the form
+              const successMessage = document.getElementById("success-message");
+              successMessage.innerHTML = `<p>${data.successMessage}<span id="close-icon" style="color: black" onclick="closeSuccessMessage()">&nbsp; &nbsp; &times;</span></p>`;
+              successMessage.style.color = "black";
+              successMessage.style.display = "block";
+            } else {
+              // Unsubscribe failed
+              const errorMessage = document.getElementById("success-message");
+              errorMessage.innerHTML = `<p style="color: red">${data.errorMessage}<span id="close-icon" style="color: red" onclick="closeSuccessMessage()">&nbsp; &nbsp; &times;</span></p>`;
+              errorMessage.style.display = "block";
+            }
+          } catch (error) {
+            console.error("Network error:", error);
+          }
+        });
+      });
+    </script>
+    <%- include('../partials/footer'); %>
+  </body>
+</html>

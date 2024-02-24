@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Account - Crime Beacon</title>
+    <link rel="icon" type="image/png" href="/images/logoimage.png" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
+    />
+  </head>
+
+  <body>
+    <%- include('./partials/header'); %>
+    <div class="img"></div>
+    <div class="center">
+      <div class="container">
+        <div class="wrapperProfile">
+          <h1 style="text-align: center">User Profile</h1>
+          <div
+            id="update-success"
+            style="display: <%= successMessage ? 'block' : 'none' %>;"
+          >
+            <p>
+              <%= successMessage %>
+              <span
+                id="close-icon"
+                style="color: black"
+                onclick="closeSuccessMessage()"
+              >
+                &nbsp; &nbsp; &times;
+              </span>
+            </p>
+          </div>
+
+          <div class="profile-info">
+            <h3 style="text-align: center">
+              Name: <%= user.firstname %> <%= user.lastname %>
+            </h3>
+            <p><strong>Email:</strong> <%= user.email %></p>
+            <p>
+              <strong>Address:</strong> <%= user.address %>, <%= user.city %> -
+              <%= user.zipcode %>
+            </p>
+            <p><strong>Phone #:</strong> <%= user.phone %></p>
+            <p><strong>Driver's License #:</strong> <%= user.license %></p>
+            <div class="button-container">
+              <form action="/updateProfile" method="GET">
+                <button id="feedbackButton" type="submit">Update</button>
+              </form>
+              <form action="/" method="GET">
+                <button id="feedbackButton" type="submit">Close</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      function closeSuccessMessage() {
+        const successMessage = document.getElementById("update-success");
+        successMessage.style.display = "none";
+      }
+    </script>
+
+    <%- include('./partials/footer'); %>
+  </body>
+</html>

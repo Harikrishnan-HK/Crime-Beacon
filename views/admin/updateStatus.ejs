@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Crime Listings - Crime Beacon</title>
+    <link rel="icon" type="image/png" href="/images/logoimage.png" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
+    />
+    <style>
+      .crime-list {
+        margin-left: 170px;
+        margin-top: 20px;
+        margin-bottom: 40px;
+      }
+
+      .crime-item {
+        margin: 20px;
+        padding: 30px;
+        line-height: 35px;
+        width: 1200px;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 3px 3px 25px rgba(0, 0, 0, 0.3);
+      }
+      .crimeid {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        margin-left: 20px;
+      }
+      .crimeContent {
+        display: flex;
+        flex-direction: row;
+      }
+      .crimeContent1 {
+        padding: 20px;
+      }
+
+      .crimeContent2 {
+        display: flex;
+        flex-direction: column;
+      }
+      h2 {
+        padding-left: 20px;
+      }
+      .crimeContent2 {
+        width: 600px;
+        height: 400px;
+        background: white;
+        padding: 20px;
+        margin-top: 20px;
+        border-radius: 8px;
+        box-shadow: 3px 3px 25px rgba(0, 0, 0, 0.3);
+      }
+
+      .Name {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+      }
+
+      .Name {
+        color: gray;
+        font-size: 13px;
+        line-height: 10px;
+      }
+
+      .comment p {
+        color: black;
+        font-size: 12px;
+      }
+
+      .share-icons {
+        display: flex;
+        margin-top: 10px;
+      }
+
+      .share-icons a {
+        margin-right: 10px;
+        color: #2878c1;
+        text-decoration: none;
+        font-size: 20px;
+      }
+
+      .report-button {
+        margin-top: 10px;
+        position: relative;
+        display: inline-block;
+      }
+
+      .report-content {
+        display: none;
+        position: absolute;
+        background-color: #f9f9f9;
+        min-width: 250px;
+        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+        padding: 12px 16px;
+        z-index: 1;
+        border-radius: 5px;
+        line-height: 25px;
+      }
+
+      .report-button:hover .report-content {
+        display: block;
+      }
+
+      .report-content label {
+        display: block;
+        margin-bottom: 8px;
+      }
+
+      .comment-button {
+        margin-top: 10px;
+      }
+
+      .comment-button button,
+      .Share-button button,
+      .report-button button {
+        background-color: white;
+        color: #2878c1;
+        border: none;
+        padding: 5px 10px;
+        cursor: pointer;
+      }
+      .Share-button {
+        margin-top: 10px;
+      }
+      .buttons {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        margin-top: auto;
+      }
+      .commentTexbox {
+        margin-top: 20px;
+        margin-left: 10px;
+        border-radius: 8px;
+        width: 300px;
+        line-height: 20px;
+        padding-left: 10px;
+      }
+      .addC-button {
+        background-color: #2878c1;
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        width: fit-content;
+        height: fit-content;
+      }
+      .commentSection {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: flex-end;
+      }
+      .comments {
+        margin-top: 5px;
+      }
+      .report-content label {
+        display: block;
+        margin-bottom: 8px;
+        font-size: 13px;
+      }
+
+      .report-content input[type="checkbox"] {
+        width: 13px;
+        height: 13px;
+      }
+
+      .report-content input[type="text"] {
+        width: 100%;
+        padding: 8px;
+        box-sizing: border-box;
+        margin-bottom: 8px;
+        font-size: 13px;
+        border-radius: 3px;
+        border: 1px solid #ccc;
+      }
+
+      .report-content button {
+        background-color: #2878c1;
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 13px;
+      }
+      #comment {
+        width: 400px;
+        height: 40px;
+      }
+     .section label{
+        display: inline;
+      }
+      .section select {
+        width: 200px;
+      }
+    </style>
+    <script>
+      // Function to toggle visibility
+      function toggleVisibility(elementId) {
+        var element = document.getElementById(elementId);
+        element.style.display =
+          element.style.display === "none" ? "block" : "none";
+      }
+    </script>
+  </head>
+  <body>
+    <%- include('../partials/adminHeader'); %>
+    <div class="terms">
+      <h1>Manage Crimes</h1>
+      <div class="crime-list">
+        <% crimeLists.forEach(function(crime) { %>
+        <div class="crime-item">
+          <div class="crimeid">
+            <span><strong>Crime ID:</strong> <%= crime._id %></span>
+            <span
+              ><strong>Posted on:</strong> <%= crime.date.toDateString()
+              %></span
+            >
+          </div>
+
+          <h2><%= crime.title %></h2>
+          <div class="crimeContent">
+            <div class="crimeContent1">
+              <img
+                src="<%= crime.imageLink %>"
+                alt="Crime Image"
+                width="600px"
+                height="400px"
+                style="
+                  border-radius: 8px;
+                  box-shadow: 3px 3px 25px rgba(0, 0, 0, 0.3);
+                "
+              />
+            </div>
+            <div class="crimeContent2">
+              <div>
+                <p><strong>Description:</strong> <%= crime.description %></p>
+                <p><strong>Location:</strong> <%= crime.location %></p>
+                <p><strong>Current Status:</strong> <%= crime.status %></p>
+                <form action="/updateStatus/<%= crime._id %>" method="post">
+                <div class="form-feedback">
+                  <div class="section">
+                    
+                    <label for="type">Update Status</label>
+                    <select id="type" name="type" required>
+                      <option value="Unread">Select Status</option>
+                      <option value="In Process">In Process</option>
+                      <option value="Resolved">Resolved</option>
+                      <option value="Closed">Closed</option>
+                    </select>
+                  </div>
+                  <div class="section">
+
+                    <label for="comment">Comments</label>
+                    <input type="text" name="comment" placeholder="Add comments" id="comment">
+                  </div>
+                    <button id="feedbackButton" type="submit">Submit</button>
+                  </div>
+                </form>
+
+          
+          
+              </div>
+
+            </div>
+          </div>
+        </div>
+        <% }); %>
+      </div>
+    </div>
+    <%- include('../partials/footer'); %>
+  </body>
+</html>

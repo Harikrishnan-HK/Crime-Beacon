@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Report a Crime - Crime Beacon</title>
+    <link rel="icon" type="image/png" href="/images/logoimage.png" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
+    />
+  </head>
+  <style>
+    .content-container {
+      padding-top: 140px;
+    }
+
+    table {
+      text-align: center;
+      border-collapse: collapse;
+      width: 60%;
+      margin: 0 auto;
+      z-index: 0;
+    }
+
+    th,
+    td {
+      color: black;
+      border: 1px solid black;
+      padding: 8px;
+      text-align: center;
+    }
+    td:nth-child(2) {
+    cursor: pointer;
+  }
+
+    th {
+      color: #2878c1;
+    }
+
+    body {
+      background-color: #dee2e6;
+      text-align: center;
+    }
+
+    button {
+      margin-top: 20px;
+      margin-bottom: 20px;
+      width: 150px;
+      height: 50px;
+      border: none;
+      outline: none;
+      background: #2f2f2f;
+      color: #fff;
+      font-size: 22px;
+      border-radius: 40px;
+      text-align: center;
+      box-shadow: 0 6px 20px -5px rgba(0, 0, 0, 0.4);
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .popup-container {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 999;
+    }
+
+    .popup-content {
+      background: white;
+      border-radius: 10px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+
+    .close-button {
+      background: #2878c1;
+      color: #fff;
+      width: 100px;
+      height: 40px;
+      border: none;
+      border-radius: 5px;
+      padding: 5px 20px;
+      cursor: pointer;
+      margin: 20px;
+      font-size: 16px;
+    }
+
+    .popup-content ul li {
+      margin-bottom: 10px;
+    }
+
+    .hidden-column {
+      display: none;
+    }
+
+    input[type="radio"] {
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      width: 20px;
+      height: 20px;
+      border: 2px solid black;
+      border-radius: 50%;
+    }
+
+    input[type="radio"]:checked {
+      background-color: #2878c1;
+    }
+    #button-container{
+      margin-top: 0;
+    }
+    #feedbackButton{
+      margin-top: 0;
+    }
+
+  </style>
+  <%- include('../partials/header'); %>
+
+  <body>
+    <form class="content-container" action="/crimereport" method="post">
+      <table>
+        <tr>
+          <th>Select</th>
+          <th>Incident Type</th>
+          <th class="hidden-column">Definition</th>
+          <th class="hidden-column">Examples</th>
+          <th>View Incident Details</th>
+        </tr>
+        <tr>
+          <td>
+            <input
+              type="radio"
+              name="select"
+              value="Damage,Mischief to Property(under $5000)"
+              placeholder="radio1"
+              required
+            />
+          </td>
+          <td>Damage/Mischief to Property (under $5000)</td>
+          <td class="hidden-column">Damage/mischief to property</td>
+          <td class="hidden-column">
+            Defacing property, breaking windows, egging buildings etc.
+          </td>
+          <td>
+            <button class="view-button" type="button">View</button>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              type="radio"
+              name="select"
+              value="Damage/Mischief to Vehicle (under $5000)"
+              placeholder="radio1"
+            />
+          </td>
+          <td>Damage/Mischief to Vehicle (under $5000)</td>
+          <td class="hidden-column">Damage/mischief to vehicle</td>
+          <td class="hidden-column">
+            Defacing vehicle, scratching/keying, egging, breaking windows,
+            denting, breaking lights, slashing tires etc.
+          </td>
+          <td>
+            <button class="view-button" type="button">View</button>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input type="radio" name="select" value="Fraud/Identity Theft" />
+          </td>
+          <td>Fraud/Identity Theft</td>
+          <td class="hidden-column">
+            Someone has obtained or used your personal or financial information
+            without your permission such as: your name; date of birth; personal
+            identification or banking information.
+          </td>
+          <td class="hidden-column">
+            - Bank account, credit application or credit card has been opened in
+            your name<br />- Your bank contacts you to say your card has been
+            compromised and you need a police report
+          </td>
+          <td>
+            <button class="view-button" type="button">View</button>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              type="radio"
+              name="select"
+              value="Lost Property (under $5000)"
+            />
+          </td>
+          <td>Lost Property (under $5000)</td>
+          <td class="hidden-column">
+            Property that is missing or lost. This does not include license
+            plates or passports.
+          </td>
+          <td class="hidden-column">
+            Lost jewelry, cellphones, GPS, laptop, tools, briefcase, etc.
+          </td>
+          <td>
+            <button class="view-button" type="button">View</button>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input type="radio" name="select" value="Stolen Licence Plates" />
+          </td>
+          <td>Stolen Licence Plates</td>
+          <td class="hidden-column">
+            If your front, rear or both license plates have been STOLEN please
+            continue to fill out this form.
+          </td>
+          <td class="hidden-column">
+            As of November 1st, 2014 there has been a change in reporting
+            requirement for lost or missing license plates and Accessible
+            Parking Permits (APP). The Province of Ontario no longer requires
+            lost or missing license plate(s) or APP(s) to be reported to the
+            police. To replace a lost/missing plate or APP please visit a
+            Service Ontario Retail Office.
+          </td>
+          <td>
+            <button class="view-button" type="button">View</button>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input type="radio" name="select" value="Theft (under $5000)" />
+          </td>
+          <td>Theft (under $5000)</td>
+          <td class="hidden-column">
+            When property is taken without your permission. Use Theft from
+            vehicle if the items were stolen from your car.
+          </td>
+          <td class="hidden-column">
+            Property known to be stolen and missing may be reported. Lost
+            property is not a theft.
+          </td>
+          <td>
+            <button class="view-button" type="button">View</button>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              type="radio"
+              name="select"
+              value="Theft from an LCBO Location"
+            />
+          </td>
+          <td>Theft from an LCBO Location</td>
+          <td class="hidden-column">
+            Taking goods from a business without the owner or their agent's
+            permission and valid payment.
+          </td>
+          <td class="hidden-column">
+            A person enters your business location, selects merchandise and
+            exits the premise making no attempt to pay for the selected
+            merchandise.
+          </td>
+          <td>
+            <button class="view-button" type="button">View</button>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              type="radio"
+              name="select"
+              value="Theft from Vehicle (under $5000)"
+            />
+          </td>
+          <td>Theft from Vehicle (under $5000)</td>
+          <td class="hidden-column">
+            Property is stolen from your personal or business vehicle. If you
+            had property stolen from more than one vehicle then you must enter a
+            separate report for each vehicle.
+          </td>
+          <td class="hidden-column">
+            Your vehicle has been entered without your permission and items that
+            were inside were taken.
+          </td>
+          <td>
+            <button class="view-button" type="button">View</button>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              type="radio"
+              name="select"
+              value="Traffic - Chronic Traffic problem in a Neighbourhood"
+            />
+          </td>
+          <td>Traffic - Chronic Traffic problem in a Neighbourhood</td>
+          <td class="hidden-column">
+            Chronic Traffic problem in a Neighbourhood NOT relating to a
+            specific vehicle or driver.
+          </td>
+          <td class="hidden-column">
+            - speeding<br />- stop sign<br />- traffic congestion<br />- heavy
+            trucks
+          </td>
+          <td>
+            <button class="view-button" type="button">View</button>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              type="radio"
+              name="select"
+              value="Traffic - Driving Complaint"
+            />
+          </td>
+          <td>Traffic - Driving Complaint</td>
+          <td class="hidden-column">
+            Relates to a specific driver or vehicle.
+          </td>
+          <td class="hidden-column">
+            - distracted driving<br />- suspended drivers<br />- driving without
+            insurance<br />- impaired drivers - NOT IN PROGRESS<br />- unsafe
+            vehicles<br />- crossing guard offenses<br />- not wearing a
+            seatbelt
+          </td>
+          <td>
+            <button class="view-button" type="button">View</button>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              type="radio"
+              name="select"
+              value="Traffic - School Bus Violations"
+            />
+          </td>
+          <td>Traffic - School Bus Violations</td>
+          <td class="hidden-column">Any violation relating to a school bus.</td>
+          <td class="hidden-column">
+            - school bus driver behavior<br />- motorists not abiding by school
+            bus signals
+          </td>
+          <td>
+            <button class="view-button" type="button">View</button>
+          </td>
+        </tr>
+      </table>
+      <div class="button-container">
+
+      <button id="feedbackButton" type="submit" value="Submit">Proceed</button>
+    </form>
+    <div class="popup-container">
+      <div class="popup-content"></div>
+    </div>
+    <script>
+      // Get all "View" buttons and pop-up container
+      const viewButtons = document.querySelectorAll(".view-button");
+      const incidentTypeCells = document.querySelectorAll("td:nth-child(2)");
+      const popupContainer = document.querySelector(".popup-container");
+      const popupContent = popupContainer.querySelector(".popup-content");
+
+      incidentTypeCells.forEach((cell) => {
+    cell.addEventListener("click", () => {
+      // Get the parent row of the cell
+      const row = cell.closest("tr");
+
+      // Get the radio button from the row
+      const radioButton = row.querySelector("input[type='radio']");
+
+      // Check the radio button
+      radioButton.checked = true;
+
+    });
+  });
+
+    
+      // Add a click event listener to each "View" button
+      viewButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          // Get the parent row of the button
+          const row = button.closest("tr");
+    
+          // Get the radio button from the row
+          const radioButton = row.querySelector("input[type='radio']");
+    
+          // Check the radio button
+          radioButton.checked = true;
+    
+          // Get the values from the corresponding cells in the row
+          const incidentType = row.querySelector("td:nth-child(2)").textContent;
+          const definition = row.querySelector("td:nth-child(3)").textContent;
+          const examples = row.querySelector("td:nth-child(4)").textContent;
+    
+          // Update the pop-up content with the retrieved data
+          popupContent.innerHTML = `<h2> Incident Details </h2> <br />
+            <ul style="margin-bottom:15px">
+              <p><strong>Incident Type: </strong>${incidentType}</p><br />
+              <p style="text-align:left; color:black"><strong>Definition: </strong>${definition}</p>
+              <p style="text-align:left; color:black"><strong>Examples: </strong>${examples}</p>
+            </ul>
+            <a style="text-decoration:none" class="close-button" onClick="clicked()">Close</a>
+          `;
+          popupContainer.style.display = "block";
+        });
+      });
+    
+      function clicked() {
+        popupContainer.style.display = "none";
+      }
+    </script>
+                  </body>
+  <%- include('../partials/footer'); %>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add Safety Advisory - Crime Beacon</title>
+    <link rel="icon" type="image/png" href="/images/logoimage.png" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
+    />
+    <style>
+      #feedbackButton {
+        font-size: 14px;
+        margin-right: 40px;
+      }
+      .button-container {
+        justify-content: flex-start;
+      }
+    </style>
+  </head>
+  <body>
+    <%- include('../partials/adminHeader'); %>
+    <div class="terms">
+      <div
+        id="advisoryAdded"
+        style="display: <%= advisoryAdded ? 'block' : 'none' %>;"
+      >
+        <p>
+          <%= advisoryAdded %>
+          <span
+            id="close-icon"
+            style="color: black"
+            onclick="closeSuccessMessage()"
+          >
+            &nbsp; &nbsp; &times;
+          </span>
+        </p>
+      </div>
+      <h1>Safety Advisory - Community Alert</h1>
+      <br />
+
+      <h3 style="text-align: center">
+        Welcome, Admin! You have the privilege to add critical safety advisories
+        that will benefit our community. Your insights and alerts play a crucial
+        role in keeping our neighborhood secure.
+      </h3>
+      <br />
+
+      <p style="text-align: justify">
+        Use this platform to provide safety recommendations, update residents
+        about potential hazards, or share important security notices. Your
+        advisories will be sent to all subscribed community members, ensuring
+        they stay informed and safe.
+      </p>
+      <br />
+
+      <form method="POST" action="/addSafetyAdvisory">
+        <div class="form-feedback">
+          <label for="subject">Subject:</label>
+          <input
+            style="width: 80%"
+            type="text"
+            id="subject"
+            name="subject"
+            required
+          />
+        </div>
+        <div class="form-feedback">
+          <label for="advisory">Advisory Message:</label>
+          <textarea id="advisory" name="advisory" rows="4" required></textarea>
+        </div>
+        <div class="button-container">
+          <button id="feedbackButton" name="action" value="add" type="submit">
+            Add Advisory
+          </button>
+          <button
+            id="feedbackButton"
+            name="action"
+            value="sendNow"
+            type="submit"
+          >
+            Send Alert Now
+          </button>
+        </div>
+      </form>
+      <script>
+        function closeSuccessMessage() {
+          const advisoryAdded = document.getElementById("advisoryAdded");
+          advisoryAdded.style.display = "none";
+        }
+      </script>
+    </div>
+
+    <%- include('../partials/footer'); %>
+  </body>
+</html>

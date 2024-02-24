@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Update Account - Crime Beacon</title>
+    <link rel="icon" type="image/png" href="/images/logoimage.png" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
+    />
+    <style>
+      .inputs {
+        display: flex;
+        justify-content: space-between;
+      }
+      .wrapperProfile label {
+        padding: 10px 10px;
+        margin: 10px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <%- include('./partials/header'); %>
+    <div class="img"></div>
+    <div class="center">
+      <div class="container">
+        <div class="wrapperProfile">
+          <h1 style="text-align: center">Update Your Profile</h1>
+          <% if (typeof emailTakenMessage !=='undefined' ) { %>
+          <p style="color: red"><%= emailTakenMessage.bodyMessage %></p>
+          <% } %>
+          <form method="post" action="/updateProfile">
+            <input type="hidden" name="userId" value="<%= user._id %>" />
+            <div class="inputs">
+              <label for="newfName">First Name</label>
+              <input
+                disabled
+                type="text"
+                name="newfName"
+                id="newfName"
+                value="<%= user.firstname %>"
+              />
+            </div>
+            <div class="inputs">
+              <label for="ulname">Last Name</label>
+              <input
+                disabled
+                type="text"
+                name="ulname"
+                id="ulname"
+                value="<%= user.lastname %>"
+              />
+            </div>
+
+            <div class="inputs">
+              <label for="newEmail">Email Address</label>
+              <input
+                disabled
+                type="email"
+                name="newEmail"
+                id="newEmail"
+                value="<%= user.email %>"
+              />
+            </div>
+
+            <div class="inputs">
+              <label for="newAddress">Address</label>
+              <input
+                type="text"
+                name="newAddress"
+                minlength="6"
+                id="newAddress"
+                value="<%= user.address %>"
+                required
+              />
+            </div>
+            <div class="inputs">
+              <label for="newCity">City</label>
+              <input
+                type="text"
+                name="newCity"
+                minlength="3"
+                id="newCity"
+                value="<%= user.city %>"
+                required
+              />
+            </div>
+            <div class="inputs">
+              <label for="newZip">Zip Code</label>
+              <input
+                type="text"
+                name="newZip"
+                minlength="7"
+                id="newZip"
+                value="<%= user.zipcode %>"
+                required
+              />
+            </div>
+
+            <div class="inputs">
+              <label for="newPhone">Phone Number</label>
+              <input
+                type="text"
+                name="newPhone"
+                id="newPhone"
+                minlength="10"
+                maxlength="10"
+                required
+                value="<%= user.phone %>"
+                required
+              />
+            </div>
+
+            <div class="inputs">
+              <label for="newLicense">Driving License</label>
+              <input
+                type="text"
+                name="newLicense"
+                id="newLicense"
+                placeholder="XXXXX-XXXXX-XXXXX"
+                minlength="17"
+                maxlength="17"
+                value="<%= user.license %>"
+                required
+              />
+            </div>
+            <div class="inputs">
+              <label for="newPassword">Password</label>
+              <input
+                type="password"
+                name="newPassword"
+                minlength="3"
+                id="newPassword"
+                value="<%= user.password %>"
+                required
+              />
+            </div>
+
+            <div class="button-container">
+              <form action="/updateProfile" method="POST">
+                <button id="feedbackButton" type="submit">Update</button>
+              </form>
+              <form action="/profile" method="GET">
+                <button id="feedbackButton" type="submit">Cancel</button>
+              </form>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <%- include('./partials/footer'); %>
+  </body>
+</html>

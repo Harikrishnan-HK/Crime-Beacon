@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Feedback - Crime Beacon</title>
+    <link rel="icon" type="image/png" href="/images/logoimage.png" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
+    />
+    <style>
+        .wrapperProfile input {
+            padding: 0px;
+            height: 40px;
+            width: fit-content;
+        }
+        .wrapperProfile h1 {
+            text-align: center;
+            padding-bottom: 20px;
+        }
+        #startDate , #endDate {
+            padding: 10px;
+            display: flex;
+            flex-direction: row;
+        }
+        .form-report2 {
+            display: inline-block;
+        }
+        .form-report2 input {
+            margin-left: 20px;
+        }
+
+        .wrapperProfile div {
+            padding: 10px 0px;
+        }
+
+        #feedbackButton {
+            width: 160px;
+            margin-left: 20px;
+            font-size: 16px;
+        }
+
+    </style>
+  </head>
+  <body>
+    <%- include('../partials/adminHeader'); %>
+    <div class="img"></div>
+
+    <div class="center">
+
+        <div class="container">
+          <div class="wrapperProfile">
+            <h1>Generate Report</h1>
+  
+      <form action="/generateReport" method="post">
+        <div class="form-report">
+          <label for="status">Select Crime Status:</label>
+          <select id="status" name="status">
+            <option value="in process">In Process</option>
+            <option value="resolved">Resolved</option>
+            <option value="closed">Closed</option>
+            <option value="unread">Unread</option>
+          </select>
+        </div>
+
+        <div class="form-report2">
+            <label for="startDate">Start Date:</label>
+            <input type="date" id="startDate" name="startDate" />
+          </div>
+
+          <div class="form-report2">
+            <label for="endDate">End Date:</label>
+            <input type="date" id="endDate" name="endDate" />
+          </div>
+
+        <button id="feedbackButton" type="submit">Generate Report</button>
+      </form>
+    </div>
+</div>
+
+</div>
+    <%- include('../partials/footer'); %>
+  </body>
+</html>

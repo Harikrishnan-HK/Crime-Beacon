@@ -1,0 +1,54 @@
+<header>
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+  />
+  <nav>
+    <div class="menu">
+      <div class="logo">
+        <a href="/"
+          ><img src="/images/logoimage.png" alt="Logo" height="40px" /> CRIME
+          BEACON</a
+        >
+        <h3>Community-Powered Crime Reporting & Management</h3>
+      </div>
+      <div class="navs">
+        <ul>
+          <li><a href="/adminDashboard">Home</a></li>
+          <li id="services">
+            <a>Services</a>
+            <div class="dropdown-content">
+              <a href="/adminCrimeListing">View Crimes</a>
+              <a href="/updateStatus">Update Crime Status</a>
+              <a href="/addSafetyAdvisory">Add/Send Advisory</a>
+            </div>
+          </li>
+          <% if(adminId==""){ %>
+          <li><a href="/login ">Login/Sign Up</a></li>
+          <% } else{ %>
+          <li id="logout">
+            <a style="color: #2878c1"> Admin <i class="fas fa-user"></i></a>
+            <div class="dropdown-content">
+              <a href="/logout">Logout</a>
+            </div>
+          </li>
+          <% } %>
+        </ul>
+        <div
+          id="logout-message"
+          style="display: <%= typeof logoutMessage !== 'undefined' && logoutMessage ? 'block' : 'none' %>;"
+        >
+          <p>
+            <%= typeof logoutMessage !== 'undefined' ? logoutMessage : '' %>
+            <span
+              id="close-icon"
+              style="color: black"
+              onclick="closeSuccessMessage()"
+              >&nbsp; &nbsp; &times;</span
+            >
+          </p>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>

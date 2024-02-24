@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register - Crime Beacon</title>
+    <link rel="icon" type="image/png" href="/images/logoimage.png" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+    <script>
+
+
+    $(document).ready(function () {
+      $("#registerForm").validate({
+        rules: {
+          uphone: { matches: "[0-9]+", minlength: 10, maxlength: 10 },
+          upass: {
+            equalTo: "#upassword", 
+          },
+        },
+        messages: {
+          upass: {
+            equalTo: "Passwords do not match",
+          },
+        },
+      });
+    });
+  </script>
+  </head>
+
+  <body>
+    <%- include('./partials/header'); %>
+
+    <div class="img"></div>
+    <div class="center">
+      <div class="container">
+        <div class="wrapper">
+          <h1 style="text-align: center">Registration</h1>
+          <% if (typeof emailTakenMessage !=='undefined' ) { %>
+          <p><%= emailTakenMessage.bodyMessage %></p>
+          <% } else { %>
+          <h3 style="text-align: center">Create your new account here!</h3>
+          <% } %>
+          <div class="content">
+            <form action="/registration" method="post" id="registerForm">
+              <div class="user-details">
+                <div class="input-box">
+                  <span class="details"
+                    >First Name</span></span
+                  >
+                  <input
+                    type="text"
+                    placeholder="First Name"
+                    minlength="3"
+                    name="ufname"
+                    required
+                  />
+                </div>
+                <div class="input-box">
+                  <span class="details">Last Name</span>
+                  <input
+                    type="text"
+                    placeholder="Last Name"
+                    minlength="3"
+                    name="ulname"
+                    required
+                  />
+                </div>
+
+                <div class="input-box">
+                  <span class="details">Address</span>
+                  <input
+                    type="text"
+                    placeholder="# Street Name"
+                    minlength="6"
+                    name="uaddress"
+                    required
+                  />
+                </div>
+                <div class="input-box">
+                  <span class="details">City</span>
+                  <input
+                    type="text"
+                    placeholder="City Name"
+                    minlength="3"
+                    name="ucity"
+                    required
+                  />
+                </div>
+
+                <div class="input-box">
+                  <span class="details">Zip Code</span>
+                  <input
+                    type="text"
+                    placeholder="XXX XXX"
+                    minlength="7"
+                    name="uzip"
+                    required
+                  />
+                </div>
+
+                <div class="input-box">
+                  <span class="details">Email Address</span>
+                  <input
+                    type="email"
+                    placeholder="example@domain.com"
+                    name="uemail"
+                    required
+                  />
+                </div>
+                <div class="input-box">
+                  <span class="details">Password</span>
+                  <input
+                    type="password"
+                    placeholder="Min 8 characters"
+                    minlength="8"
+                    id="upassword"
+                    name="upassword"
+                    required
+                  />
+                </div>
+                <div class="input-box">
+                  <span class="details">Confirm Password</span>
+                  <input
+                    type="text"
+                    placeholder="Re-enter password"
+                    id="upassword"
+                    name="upass"
+                    minlength="8"
+                    required
+                  />
+                </div>
+                <div class="input-box">
+                  <span class="details">Phone Number</span>
+                  <input
+                    type="text"
+                    placeholder="Enter 10 digit number"
+                    name="uphone"
+                    id="uphone"
+                    minlength="10"
+                    required
+                  />
+                </div>
+
+                <div class="input-box">
+                  <span class="details">Driver's License Number</span>
+                  <input
+                    type="text"
+                    placeholder="XXXXX-XXXXX-XXXXX"
+                    name="ulicense"
+                    minlength="17"
+                    required
+                  />
+                </div>
+                <div class="tacbox">
+                  <input name="checkbox" type="checkbox" required />
+                  <span class="details" for="checkbox">
+                    I agree to these
+                    <a href="/terms">Terms and Conditions</a>.</span
+                  >
+                </div>
+              </div>
+              <div class="row button">
+                <input type="submit" value="Register" />
+              </div>
+              <div class="signup-link">
+                Existing user?
+                <a href="/login" style="color: #2878c1"
+                  ><strong>Login now</strong></a
+                >
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <%- include('./partials/footer'); %>
+  </body>
+</html>

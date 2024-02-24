@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard - Crime Beacon</title>
+  <link rel="icon" type="image/png" href="/images/logoimage.png" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/adminDashboard.css" />
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" />
+</head>
+
+<body>
+  <%- include('../partials/adminHeader'); %>
+    <div class="img"></div>
+    <div class="center">
+      <div class="adminContainer">
+        <div class="wrapper">
+          <h1 style="text-align: left">👮🏼 Welcome 👮🏻‍♂️</h1>
+          <h3 style="text-align: left">
+            Hi Admin, Welcome to the Crime Beacon Dashboard!
+          </h3>
+
+          <div class="grid-container">
+            <div class="grid-box large">
+              <div class="notes">
+                <h2>Notifications</h2>
+
+
+              </div>
+              <div class="section">
+                
+                
+                <h2>Crime Delete Requests</h2>
+                <% if (deleteRequests.length> 0) { %> <% for (const request of deleteRequests) { %>
+                  <div class="delete-request">
+                    <p><strong>Crime ID:</strong>
+                      <%= request.crimeId %>
+                    </p>
+                    <p><strong>Reason:</strong>
+                      <%= request.reason %>
+                    </p>
+                    <a href="/viewDeleteRequest/<%= request._id %>">
+                      <button id="vButton">View</button>
+                    </a>
+                  </div>
+                  <% } %>
+                  <% } else { %>
+                    <p>No new delete requests.</p>
+                    <% } %>
+                  </div>
+                  <div class="section">
+                    
+                    <h2>Flagged Contents</h2>
+                    <% if (reportedRequests.length> 0) { %> <% for (const request of reportedRequests) { %>
+                      <div class="reported-request">
+                        <p><strong>Crime ID:</strong>
+                          <%= request.crimeId %>
+                        </p>
+                        <p><strong>Report Type:</strong>
+                          <%= request.reportType %>
+                        </p>
+                        <a href="/adminDashboard/manageReportRequest/<%= request._id %>">
+                          <button id="vButton">View</button>
+                        </a>
+                      </div>
+                            <% } %>
+                              <% } else { %>
+                                <p>No reported requests.</p>
+                                <% } %>
+                              </div>  
+
+            </div>
+            <div class="grid-box">
+              <h2>Update Crime Status</h2>
+              <p>
+                Quickly review and manage reported incidents to keep your
+                community safe. Click below to update the status of each
+                incident and provide timely responses.
+              </p>
+              <a href="/updateStatus"> <button id="dashButton">Update</button></a>
+            </div>
+
+            <div class="grid-box W">
+              <h2>Feedback from users</h2>
+              <% if (feedbackData.length> 0) { %> <% for (const feedback of feedbackData) { %>
+                <% if (feedback.feedbackType == "Incident Report") { %> 
+                  <div class="reported-request">
+                    <p><strong>Email:</strong>
+                      <%= feedback.email %>
+                    </p>
+                    <p><strong>Feedback Message:</strong>
+                      <%= feedback.feedbackMessage %>
+                    </p>
+                    <% } %> 
+                    <% } %>
+                      <% } else { %>
+                        <p>No reported feedbacks.</p>
+                        <% } %>
+                  </div>
+            </div>
+
+                  <div class="grid-box">
+                    <h2>Add Safety Advisory</h2>
+                    <p>
+                      Contribute to community safety by sharing important safety
+                      advisories. Add new safety advisories to inform and protect your
+                      community members.
+                    </p>
+                    <a href="/addSafetyAdvisory">
+                      <button id="dashButton">Add</button>
+                    </a>
+                  </div>
+
+                  <div class="grid-box">
+                    <h2>User Count Statistics</h2>
+                    <canvas id="userCountChart" width="300" height="200"></canvas>
+                  </div>
+
+                  <!-- Content Box 6: Additional Section -->
+                  <div class="grid-box">
+                    <h2>Generate Report</h2>
+                    <p>
+                      Generate informative reports for data analysis and record
+                      keeping. Create PDF reports with valuable insights to aid
+                      decision-making.
+                    </p>
+                    <a href="/generateReport">
+                      <button id="dashButton">Generate PDF</button>
+                    </a>                  </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <%- include('../partials/footer'); %>
+
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script>
+          var chartDatas = <%= JSON.stringify(data) %>;
+        </script>
+        <script>
+          document.addEventListener("DOMContentLoaded", () => {
+            const ctx = document.getElementById("userCountChart").getContext("2d");
+
+            const chartData = {
+              labels: ["Sep '23", "Oct '23", "Nov '23", "Dec '23"], // Replace with your specific labels
+              datasets: [
+                {
+                  label: "User Count",
+                  data: chartDatas,
+                  borderColor: "#2878c1",
+                  borderWidth: 2,
+                  fill: false,
+                },
+              ],
+            };
+            new Chart(ctx, {
+              type: "bar",
+              data: chartData,
+              options: {
+                scales: {
+                  x: {
+                    beginAtZero: false,
+                    ticks: {
+                      maxTicksLimit: 4,
+                    },
+                  },
+                  y: {
+                    beginAtZero: true,
+                    title: {
+                      display: true,
+                    },
+                  },
+                },
+              },
+            });
+          });
+        </script>
+</body>
+
+</html>

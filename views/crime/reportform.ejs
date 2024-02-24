@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Report Form - Crime Beacon</title>
+    <link rel="icon" type="image/png" href="/images/logoimage.png" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+  </head>
+  <style>
+    .details {
+      font-weight: bold;
+    }
+    .input-box textarea {
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 5px;
+      padding-left: 15px;
+      border: 1px solid #ccc;
+      border-bottom-width: 2px;
+    }
+  </style>
+
+  <body>
+    <%- include('../partials/header'); %>
+
+    <div class="img"></div>
+    <div class="center">
+      <div class="container">
+        <div class="wrapper">
+          <div class="title" style="color: #2878c1"><%= selectedOption %></div>
+          <div class="content">
+            <form
+              method="post"
+              action="/reportform"
+              enctype="multipart/form-data"
+            >
+              <div class="user-details">
+                <div class="input-box" hidden>
+                  <span class="details">title</span>
+                  <input
+                    type="text"
+                    id="title"
+                    name="title"
+                    value="<%= selectedOption %>"
+                  />
+                </div>
+                <div class="input-box">
+                  <span class="details">Location</span>
+                  <input
+                    type="text"
+                    id="location"
+                    name="location"
+                    value="GetLocation"
+                  />
+                </div>
+                <div class="input-box">
+                  <span class="details">Upload image</span>
+                  <input
+                    style="padding: 8px; cursor: pointer"
+                    type="file"
+                    id="image"
+                    name="image"
+                    required
+                  />
+                </div>
+                <div class="input-box">
+                  <span class="details">Description</span>
+                  <textarea
+                    id="description"
+                    name="description"
+                    rows="4"
+                    cols="50"
+                    placeholder="Add Description"
+                    required
+                  ></textarea>
+                </div>
+                <div class="input-box"></div>
+                <div class="input-box"><h3 >Contact Details</h3></div>
+                <div class="input-box"></div>
+                
+                <div class="input-box">
+                  <span class="details">Contact Person</span>
+                  <input
+                    type="text"
+                    placeholder="Enter person name"
+                    name="person"
+                    value="<%= user.firstname %>"
+                    required
+                  />
+                </div>
+                <div class="input-box">
+                  <span class="details">Phone Number</span>
+                  <input
+                    type="text"
+                    placeholder="Enter contact number"
+                    minlength="10"
+                    name="phone"
+                    value="<%= user.phone %>"
+                    required
+                  />
+                </div>
+              </div>
+              <div class="button-container">
+                <form>
+                  <button id="feedbackButton" type="submit">Submit</button>
+                </form>
+                <button id="feedbackButton" type="reset">Clear</button>
+
+                <button id="feedbackButton" onclick="goBack()">Back</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <%- include('../partials/footer'); %>
+    <script>
+      $(document).ready(function () {
+        getLocation();
+      });
+      const Variable = document.getElementById("location");
+      function getLocation() {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(showPosition);
+        } else {
+          Variable.value = "Geolocation is not supported by this browser.";
+        }
+      }
+
+      function showPosition(position) {
+        Variable.value =
+          "Lat:" +
+          position.coords.latitude +
+          ", Long:" +
+          position.coords.longitude;
+      }
+
+      function goBack() {
+        window.history.back();
+      }
+    </script>
+  </body>
+</html>

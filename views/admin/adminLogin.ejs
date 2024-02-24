@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Login - Crime Beacon</title>
+    <link rel="icon" type="image/png" href="/images/logoimage.png" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
+    />
+  </head>
+
+  <body>
+    <%- include('../partials/adminHeader'); %>
+    <div class="img"></div>
+    <div class="center">
+      <div class="loginContainer">
+        <div class="wrapper">
+          <h1 style="text-align: center; margin-bottom: 20px">
+            Welcome Admin!
+          </h1>
+          <form action="/adminLogin" method="post">
+            <div class="row">
+              <i class="fas fa-user"></i>
+              <input type="text" placeholder="Email" name="email" required />
+            </div>
+            <div class="row">
+              <i class="fas fa-lock"></i>
+              <input
+                type="password"
+                placeholder="Password"
+                name="password"
+                required
+              />
+            </div>
+            <div class="pass"><a href="#">Forgot password?</a></div>
+            <div class="row button">
+              <input type="submit" value="Login" />
+            </div>
+            <div class="signup-link">
+              Not registered?
+              <a href="/adminRegister" style="color: #2878c1"
+                ><strong>Register now</strong></a
+              >
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <%- include('../partials/footer'); %>
+  </body>
+</html>

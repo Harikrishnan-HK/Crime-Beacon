@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - Crime Beacon</title>
+    <link rel="icon" type="image/png" href="/images/logoimage.png" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
+    />
+    <script>
+      function closeSuccessMessage() {
+        const successMessage = document.getElementById("success-message");
+        successMessage.style.display = "none";
+      }
+    </script>
+  </head>
+
+  <body>
+    <%- include('./partials/header'); %>
+    <div class="img"></div>
+    <div class="center">
+      <div class="loginContainer">
+        <div class="wrapper">
+          <h1 style="text-align: center; margin-bottom: 20px">Log In</h1>
+          <div
+            id="success-message"
+            style="display: <%= errorMessage ? 'block' : 'none' %>;"
+          >
+            <p style="color: red">
+              <%= errorMessage %>
+              <span
+                id="close-icon"
+                style="color: red"
+                onclick="closeSuccessMessage()"
+              >
+                &nbsp; &nbsp; &times;
+              </span>
+            </p>
+          </div>
+          <div
+            id="success-message"
+            style="display: <%= successMessage && !errorMessage ? 'block' : 'none' %>;"
+          >
+            <p>
+              <%= successMessage %>
+              <span
+                id="close-icon"
+                style="color: black"
+                onclick="closeSuccessMessage()"
+              >
+                &nbsp; &nbsp; &times;
+              </span>
+            </p>
+          </div>
+
+          <form action="/login" method="post">
+            <div class="row">
+              <i class="fas fa-user"></i>
+              <input type="text" placeholder="Email" name="email" required />
+            </div>
+            <div class="row">
+              <i class="fas fa-lock"></i>
+              <input
+                type="password"
+                placeholder="Password"
+                name="password"
+                required
+              />
+            </div>
+            <div class="pass"><a href="#">Forgot password?</a></div>
+            <div class="row button">
+              <input type="submit" value="Login" />
+            </div>
+            <div class="signup-link">
+              Not registered?
+              <a href="/register" style="color: #2878c1"
+                ><strong>Register now</strong></a
+              >
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <%- include('./partials/footer'); %>
+  </body>
+</html>

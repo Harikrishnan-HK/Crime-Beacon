@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Account - Crime Beacon</title>
+    <link rel="icon" type="image/png" href="/images/logoimage.png" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
+    />
+    <style>
+      .message {
+        margin: 20px;
+        padding: 30px;
+        line-height: 35px;
+        width: 600px;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 3px 3px 25px rgba(0, 0, 0, 0.3);
+      }
+    </style>
+  </head>
+
+  <body>
+    <%- include('./partials/header'); %>
+    <div class="terms">
+      <h1 style="text-align: center">Messages</h1>
+      <% messages.sort((a, b) => b.date - a.date); %>
+      <% if (messages.length > 0) { %> <% for (const message of messages) { %>
+      <div class="message">
+        <span><strong>From:</strong> <%= message.sender %></span>
+        <span><strong>Date:</strong> <%= message.date.toDateString() %></span>
+        <p><%= message.content %></p>
+      </div>
+      <% } %> <% } else { %>
+      <p>No messages available.</p>
+      <% } %>
+    </div>
+
+    <%- include('./partials/footer'); %>
+  </body>
+</html>

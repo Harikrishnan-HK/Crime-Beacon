@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Crime Listings - Crime Beacon</title>
+    <link rel="icon" type="image/png" href="/images/logoimage.png" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
+    />
+    <style>
+      .crime-item {
+        margin: 20px;
+        padding: 30px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        line-height: 35px;
+        width: 1200px;
+        background-color: white;
+      }
+      .crimeid {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        margin-left: 20px;
+      }
+      .crimeContent {
+        display: flex;
+        flex-direction: row;
+      }
+      .crimeContent1 {
+        padding: 20px;
+      }
+      .crimeContent2 {
+        padding: 20px;
+      }
+      h2 {
+        padding-left: 20px;
+      }
+      label {
+        font-weight: bold;
+        color: #2878c1;
+      }
+      #addMore {
+        padding: 0px 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <%- include('./partials/header'); %>
+    <div class="terms">
+      <h1>Update your incident</h1>
+
+      <div class="crime-item">
+        <h2><%= crime.title %></h2>
+        <div class="crimeid">
+          <span><strong>Crime ID:</strong> <%= crime._id %></span>
+
+          <span
+            ><strong>Posted on:</strong> <%= crime.date.toDateString() %></span
+          >
+        </div>
+        <div class="crimeContent">
+          <div class="crimeContent1">
+            <img
+              src="/<%= crime.imageLink %>"
+              alt="Crime Image"
+              width="600px"
+              height="400px"
+            />
+          </div>
+          <div class="crimeContent2">
+            <p><strong>Description:</strong> <%= crime.description %></p>
+            <form action="/updateCrime/<%= crime._id %>" method="post">
+              <label for="additionalDescription">Additional Description:</label>
+              <textarea
+                name="additionalDescription"
+                id="additionalDescription"
+                rows="4"
+                cols="50"
+                required
+              ></textarea>
+              <button id="addMore" type="submit">Add More</button>
+            </form>
+            <p><strong>Location:</strong> <%= crime.location %></p>
+            <p><strong>Phone Number:</strong> <%= crime.personPhone %></p>
+            <p><strong>Person Name:</strong> <%= crime.personName %></p>
+            <p><strong>Status:</strong> <%= crime.status %></p>
+            <div class="button-container">
+              <form action="/manageCrime/<%= crime._id %>" method="get">
+                <button id="feedbackButton">Back</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <%- include('./partials/footer'); %>
+  </body>
+</html>
