@@ -27,7 +27,7 @@ const transporter = createTransport({
   },
 });
 
-mongoose.connect("mongodb://127.0.0.1:27017/crimeBeacon");
+mongoose.connect("mongodb://127.0.0.1:27017/capstoneproject");
 
 
 app.locals.userId = "";
