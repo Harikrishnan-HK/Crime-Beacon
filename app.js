@@ -27,12 +27,12 @@ const transporter = createTransport({
   },
 });
 
-mongoose.connect('mongodb://0.0.0.0:27017/capstoneproject', {
+mongoose.connect('mongodb+srv://harikrishnan:1234qwer@clusterhk.hkumxeu.mongodb.net/', {
   useNewURLParser: true,
   useUnifiedTopology: true,
 },6000000)
 
-.then(console.log("connected to server"))
+.then(console.log("connected to DB"))
 .catch((err) => console.log(err));
 
 
