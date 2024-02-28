@@ -1,7 +1,9 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
-const port = 8000;
+require('dotenv').config();
+const PORT = process.env.PORT;
+
 const path = require("path");
 const mongoose = require("mongoose");
 const fileUpload = require("express-fileupload");
@@ -14,7 +16,7 @@ const { userInfo } = require("os");
 const PDFDocument = require('pdfkit');
 const generatePdf = require('./pdfGenerationScript');
 const crimeDetails = require('./crime');
-require('dotenv').config();
+
 
 module.exports = app;
 
@@ -1314,6 +1316,6 @@ app.get("/logout", (req, res) => {
   res.render("index", { logoutMessage });
 });
 
-app.listen(port, () => {
-  console.log(`listening on port http://localhost:${port}`);
+app.listen(PORT, () => {
+  console.log(`listening on port http://localhost:${PORT}`);
 });
