@@ -14,6 +14,7 @@ const { userInfo } = require("os");
 const PDFDocument = require('pdfkit');
 const generatePdf = require('./pdfGenerationScript');
 const crimeDetails = require('./crime');
+require('dotenv').config();
 
 module.exports = app;
 
@@ -27,14 +28,13 @@ const transporter = createTransport({
   },
 });
 
-mongoose.connect('mongodb+srv://harikrishnan:1234qwer@clusterhk.hkumxeu.mongodb.net/', {
-  useNewURLParser: true,
+mongoose.connect(process.env.MONGODB_URI, {
+  useNewUrlParser: true,
   useUnifiedTopology: true,
-},6000000)
-
-.then(console.log("connected to DB"))
-.catch((err) => console.log(err));
-
+  serverSelectionTimeoutMS: 6000000
+})
+.then(() => console.log("Connected to DB"))
+.catch((err) => console.error(err));
 
 
 app.locals.userId = "";
